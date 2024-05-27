@@ -1,0 +1,32 @@
+● LetsNote
+|
++---● assets (images for readme)
+|
++---● frontend (frontend vue.js source codes)
+|   |  |--● src
+|   |  |  |-- main.js
+|   |  |  |-- App.vue
+|   |  |  |  |--● components
+|   |  |  |  |  |-- NoteAddNew.vue
+|   |  |  |  |  |-- NoteList.vue
+|   |  |  |  |  |-- NoteModify.vue
+|   |  |  |  |  |-- NoteView.vue
+|   |  |  |  |  |
++---● src (backend go source codes)
+|   |  |  |
+|   |  |--● db_mgmt (database functions)
+|   |  |  |--db_mgmt.go
+|   |  |  |--go.mod
+|   |  |  |
+|   |  |--● models (define note structure and operations)
+|   |  |  |--models.go
+|   |  |  |--go.mod
+|   |  |  |
+|   |  |--● interfaces (handle http requests)
+|   |  |  |--interfaces.go
+|   |  |  |--go.mod
+|   |  |  |
+|-- main.go (main program)
+|-- README.md
+|-- go.mod
+|-- go.sum

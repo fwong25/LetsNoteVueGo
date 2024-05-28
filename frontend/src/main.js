@@ -16,6 +16,9 @@ import NoteList from './components/NoteList.vue'
 import NoteAddNew from './components/NoteAddNew.vue'
 import NoteView from './components/NoteView.vue'
 import NoteModify from './components/NoteModify.vue'
+import NoteSidebar from './components/NoteSidebar.vue'
+import NoteEditTemplate from './components/NoteEditTemplate.vue'
+import SubpageTemplate from './components/SubpageTemplate.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -30,7 +33,9 @@ const router = createRouter({
 const app = createApp(App)
 app.use(router)
 
-// app.component('note-list', NoteList)
+app.component('note-sidebar', NoteSidebar)
+app.component('note-edit-template', NoteEditTemplate)
+app.component('subpage-template', SubpageTemplate)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')
 

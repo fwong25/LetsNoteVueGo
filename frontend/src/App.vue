@@ -14,11 +14,11 @@ export default {
 </template>
 
 <style>
-  /* #app > div {
-      border: dashed black 1px;
-      display: inline-block;
-      margin: 10px;
-      padding: 10px;
-      background-color: lightgreen;
-    } */
+  .astext {
+      background:none;
+      border:none;
+      margin:0;
+      padding:0;
+      cursor: pointer;
+  }
 </style>

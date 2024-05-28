@@ -10,8 +10,6 @@
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <form class="float-left d-inline">
-                                    <input type="hidden" name="Parent_tbl_id" value="none">
-                                    <input type="hidden" name="Parent_note_id" value="none">
                                     <div class="input-group-append text-info" style="column-width: 60px;">
                                         <span class="input-group-text bg-white py-0">
                                             <button type="submit" class="btn btn-sm text-info" @click.stop.prevent="addNewNote()">
@@ -24,8 +22,6 @@
                             <li class="list-group-item">
                                 <h6 class="mb-1" v-for="note in note_list">
                                     <form class="d-inline">
-                                        <input type="hidden" name="tbl_id" v-bind:value="note.Parent_table_id.concat('_', note.Parent_note_id)">
-                                        <input type="hidden" name="note_id" v-bind:value="note.Id">
                                         <span v-for="val in note.Note_level">&nbsp;&nbsp;</span>
                                         <button type="submit" class="astext"  @click.stop.prevent="viewNote(note.Parent_table_id, note.Parent_note_id, note.Id)">
                                             <p v-if="note.Note_level > 0">&#x2022; {{ note.Title }}</p>
@@ -84,11 +80,4 @@ export default {
 </script>
 
 <style>
-    .astext {
-            background:none;
-            border:none;
-            margin:0;
-            padding:0;
-            cursor: pointer;
-        }
 </style>

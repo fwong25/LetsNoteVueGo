@@ -4,10 +4,7 @@ import (
 	"db_mgmt"
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"net/http"
-	"path/filepath"
-	"strconv"
 )
 
 const templatesDirPath = "templates"
@@ -47,13 +44,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 }
 
 func listNote(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
-
-	w.WriteHeader(http.StatusOK)
+	setHeader(w, "GET")
 
 	if r.Method == "GET" {
 		note_list := db_mgmt.GetNoteListAllSubtable(db_mgmt.Main_tbl_id)
@@ -81,13 +72,7 @@ func getNote(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("View note with table ID: " + tbl_id + ", note ID: " + note_id)
 	selected_note := db_mgmt.GetNote(tbl_id, note_id)
 
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
-
-	w.WriteHeader(http.StatusOK)
+	setHeader(w, "GET")
 
 	if r.Method == "GET" {
 		var result, err = json.Marshal(selected_note)
@@ -103,35 +88,13 @@ func getNote(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "", http.StatusBadRequest)
 }
 
-func insertNoteAction(w http.ResponseWriter, r *http.Request) {
-	action := r.FormValue("action")
-	if action != "Insert" {
-		parent_tbl_id := r.FormValue("Parent_tbl_id")
-		parent_note_id := r.FormValue("Parent_note_id")
-
-		if parent_tbl_id == "none" {
-			http.Redirect(w, r, "/list_note", http.StatusSeeOther)
-		} else {
-			http.Redirect(w, r, "/view_note?tbl_id="+parent_tbl_id+"&note_id="+parent_note_id, http.StatusSeeOther)
-		}
-	} else {
-		insertNote(w, r)
-	}
-}
-
 type insert_note_body_t struct {
 	Title   string
 	Content string
 }
 
 func insertNote(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
-
-	w.WriteHeader(http.StatusOK)
+	setHeader(w, "POST")
 
 	contentType := r.Header.Get("Content-type")
 	var title, content string
@@ -186,13 +149,7 @@ func insertNote(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteNote(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, DELETE")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
-
-	w.WriteHeader(http.StatusOK)
+	setHeader(w, "DELETE")
 
 	tbl_id := r.FormValue("tbl_id")
 	note_id := r.FormValue("note_id")
@@ -209,42 +166,8 @@ func deleteNote(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "", http.StatusBadRequest)
 }
 
-func modifyNote(w http.ResponseWriter, r *http.Request) {
-	note_id := r.FormValue("note_id")
-	table_id := r.FormValue("tbl_id")
-	note_list := db_mgmt.GetNoteListAllSubtable(db_mgmt.Main_tbl_id)
-
-	if table_id == "none_none" {
-		table_id = db_mgmt.Main_tbl_id
-	}
-	note_to_edit := db_mgmt.GetNote(table_id, note_id)
-
-	var fileName = "note_modify.html"
-	t, err := template.New(fileName).Funcs(funcMap).ParseFiles(filepath.Join(templatesDirPath, fileName))
-	if err != nil {
-		fmt.Println("Error when parsing file", err)
-		return
-	}
-
-	note_id_int, _ := strconv.Atoi(note_id)
-
-	modify_note_info := map[string]interface{}{"Note_id": note_id_int, "Note_list": note_list, "Note_to_edit": note_to_edit}
-
-	err = t.ExecuteTemplate(w, fileName, modify_note_info)
-	if err != nil {
-		fmt.Println("Error when executing template", err)
-		return
-	}
-}
-
 func updateNote(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
-	w.Header().Set("Access-Control-Allow-Credentials", "true")
-	w.Header().Set("Access-Control-Allow-Methods", "PUT")
-	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
-
-	w.WriteHeader(http.StatusOK)
+	setHeader(w, "PUT")
 
 	note_id := r.FormValue("note_id")
 	tbl_id := r.FormValue("tbl_id")
@@ -283,29 +206,12 @@ func updateNote(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func modifyNoteConfirm(w http.ResponseWriter, r *http.Request) {
-	note_id := r.FormValue("note_id")
-	tbl_id := r.FormValue("tbl_id")
-	fmt.Print("Confirm modification on note with ID:", note_id)
-	fmt.Println(", Table ID:", tbl_id)
-	title := r.FormValue("title")
-	content := r.FormValue("content")
+func setHeader(w http.ResponseWriter, allow_methods string) {
+	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+	w.Header().Set("Access-Control-Allow-Credentials", "true")
+	w.Header().Set("Access-Control-Allow-Methods", allow_methods)
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Accept")
 
-	if tbl_id == "none_none" {
-		tbl_id = db_mgmt.Main_tbl_id
-	}
-	db_mgmt.UpdateNote(tbl_id, note_id, title, content)
-
-	http.Redirect(w, r, "/view_note?tbl_id="+tbl_id+"&note_id="+note_id, http.StatusSeeOther)
-}
-
-func modifyNoteAction(w http.ResponseWriter, r *http.Request) {
-	action := r.FormValue("action")
-	note_id := r.FormValue("note_id")
-	tbl_id := r.FormValue("tbl_id")
-	if action != "Update" {
-		http.Redirect(w, r, "/view_note?tbl_id="+tbl_id+"&note_id="+note_id, http.StatusSeeOther)
-	} else {
-		modifyNoteConfirm(w, r)
-	}
+	w.WriteHeader(http.StatusOK)
 }

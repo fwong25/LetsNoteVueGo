@@ -14,17 +14,15 @@ export default {
                     Last_modified_date: '',
                     Subnote_exist: false,
                     Note_level: 0,
-                    Parent_table_id: '',
-                    Parent_note_id: ''
+                    Parent_note_id: 0
                 }
             }  
         },
         methods: {
-            fetchSelectedNote(note_id, tbl_id) {
+            fetchSelectedNote(note_id) {
                 fetch('http://localhost:8000/get_note?' + 
                     new URLSearchParams({
-                        note_id: note_id,
-                        tbl_id: tbl_id,
+                        note_id: note_id
                     }), 
                     {
                     method: 'GET',
@@ -58,7 +56,6 @@ export default {
 
                 fetch('http://localhost:8000/update_note?' + 
                     new URLSearchParams({
-                        tbl_id: this.$route.query.tbl_id,
                         note_id: this.$route.query.note_id,
                     }), 
                     {
@@ -77,18 +74,18 @@ export default {
                 .then((response) => {
                     console.log(response)
                     this.$router.push({ path: 'note_view',
-                        query: { tbl_id: this.$route.query.tbl_id, note_id: this.$route.query.note_id }
+                        query: { note_id: this.$route.query.note_id }
                     });
                 })
             },
             cancelUpdate() {
                 this.$router.push({ path: 'note_view',
-                    query: { tbl_id: this.$route.query.tbl_id, note_id: this.$route.query.note_id }
+                    query: { note_id: this.$route.query.note_id }
                 });
             }
         },
         beforeMount() {
-            this.fetchSelectedNote(this.$route.query.note_id, this.$route.query.tbl_id)
+            this.fetchSelectedNote(this.$route.query.note_id)
         }
 }
 </script>

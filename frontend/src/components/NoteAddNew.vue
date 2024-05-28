@@ -19,7 +19,6 @@ export default {
 
                 fetch('http://localhost:8000/insert_note?' + 
                     new URLSearchParams({
-                        Parent_tbl_id: this.$route.query.Parent_tbl_id,
                         Parent_note_id: this.$route.query.Parent_note_id,
                     }), 
                     {
@@ -40,19 +39,18 @@ export default {
                     response.json().then((data) => {
                         console.log(data)
                         console.log(data.note_id)
-                        console.log(data.table_id)
                         this.$router.push({ path: 'note_view',
-                            query: { tbl_id: data.table_id, note_id: data.note_id }
+                            query: { note_id: data.note_id }
                         });
                     })
                 })
             },
             cancelAddNote() {
-                if (this.$route.query.Parent_tbl_id === 'none') {
+                if (this.$route.query.Parent_note_id === 0) {
                     this.$router.push({ path: '/'});
                 } else {
                     this.$router.push({ path: 'note_view',
-                        query: { tbl_id: this.$route.query.Parent_tbl_id, note_id: this.$route.query.Parent_note_id }
+                        query: { note_id: this.$route.query.Parent_note_id }
                     });
                 }
             }

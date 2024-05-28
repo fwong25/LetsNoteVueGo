@@ -22,7 +22,7 @@
                 <form  class="d-inline">
                     <nobr>
                         <i v-for="val in note.Note_level">-</i>
-                        <button type="submit" class="astext" @click.stop.prevent="viewNote(note.Parent_table_id, note.Parent_note_id, note.Id)">
+                        <button type="submit" class="astext" @click.stop.prevent="viewNote(note.Id)">
                             <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline text-white">{{ note.Title }}</span>
                         </button>
                     </nobr>
@@ -62,15 +62,13 @@ export default {
                 })
             },
             addNewNote() {
-                this.$router.push({ path: 'note_add_new', query: { Parent_tbl_id: 'none', Parent_note_id: 'none' } });
-                // this.$router.push({ path: 'food', query: { Parent_tbl_id: 'none', Parent_note_id: 'none' } });
+                this.$router.push({ path: 'note_add_new', query: { Parent_note_id: 0 } });
             },
             backToNoteList() {
                 this.$router.push({ path: '/'});
             },
-            viewNote(parent_tbl_id, parent_note_id, note_id) {
-                let tbl_id = parent_tbl_id.concat('_', parent_note_id)
-                this.$router.push({ path: 'note_view', query: { tbl_id: tbl_id, note_id: note_id } });
+            viewNote(note_id) {
+                this.$router.push({ path: 'note_view', query: { note_id: note_id } });
             }
         },
         beforeMount() {

@@ -41,17 +41,15 @@ export default {
                     Last_modified_date: '',
                     Subnote_exist: false,
                     Note_level: 0,
-                    Parent_table_id: '',
-                    Parent_note_id: ''
+                    Parent_note_id: 0
                 }
             }  
         },
         methods: {
-            fetchSelectedNote(note_id, tbl_id) {
+            fetchSelectedNote(note_id) {
                 fetch('http://localhost:8000/get_note?' + 
                     new URLSearchParams({
-                        note_id: note_id,
-                        tbl_id: tbl_id,
+                        note_id: note_id
                     }), 
                     {
                     method: 'GET',
@@ -80,8 +78,7 @@ export default {
             deleteNote() {
                 fetch('http://localhost:8000/delete_note?' + 
                     new URLSearchParams({
-                        note_id: this.$route.query.note_id,
-                        tbl_id: this.$route.query.tbl_id,
+                        note_id: this.$route.query.note_id
                     }), 
                     {
                     method: 'DELETE',
@@ -95,29 +92,26 @@ export default {
                 .then((response) => {
                     console.log(response)
 
-                    if (this.selected_note.Parent_table_id === 'none') {
+                    if (this.selected_note.Parent_note_id === 0) {
                         this.$router.push({ path: '/'});
                     } else {
                         this.$router.push({ path: 'note_view',
-                            query: { tbl_id: this.selected_note.Parent_table_id, note_id: this.selected_note.Parent_note_id }
+                            query: { note_id: this.selected_note.Parent_note_id }
                         });
                     }
                 })
             },
             editNote() {
-                this.$router.push({ path: 'note_modify', query: { tbl_id: this.$route.query.tbl_id, note_id: this.$route.query.note_id } });
+                this.$router.push({ path: 'note_modify', query: { note_id: this.$route.query.note_id } });
             },
             addNewSubnote() {
-                console.log(this.selected_note.Parent_table_id)
-                let parent_tbl_id = this.selected_note.Parent_table_id.concat('_', this.selected_note.Parent_note_id)
                 let parent_note_id = this.selected_note.Id
-                console.log(parent_tbl_id)
                 console.log(parent_note_id)
-                this.$router.push({ path: 'note_add_new', query: { Parent_tbl_id: parent_tbl_id, Parent_note_id: parent_note_id } });
+                this.$router.push({ path: 'note_add_new', query: { Parent_note_id: parent_note_id } });
             }
         },
         beforeMount() {
-            this.fetchSelectedNote(this.$route.query.note_id, this.$route.query.tbl_id)
+            this.fetchSelectedNote(this.$route.query.note_id)
         }
 }
 </script>

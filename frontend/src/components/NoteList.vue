@@ -23,7 +23,7 @@
                                 <h6 class="mb-1" v-for="note in note_list">
                                     <form class="d-inline">
                                         <span v-for="val in note.Note_level">&nbsp;&nbsp;</span>
-                                        <button type="submit" class="astext"  @click.stop.prevent="viewNote(note.Parent_table_id, note.Parent_note_id, note.Id)">
+                                        <button type="submit" class="astext"  @click.stop.prevent="viewNote(note.Id)">
                                             <p v-if="note.Note_level > 0">&#x2022; {{ note.Title }}</p>
                                             <h5 v-else>{{ note.Title }}</h5>
                                         </button>
@@ -66,11 +66,10 @@ export default {
             })
         },
         addNewNote() {
-            this.$router.push({ path: 'note_add_new', query: { Parent_tbl_id: 'none', Parent_note_id: 'none' } });
+            this.$router.push({ path: 'note_add_new', query: { Parent_note_id: 0 } });
         },
-        viewNote(parent_tbl_id, parent_note_id, note_id) {
-            let tbl_id = parent_tbl_id.concat('_', parent_note_id)
-            this.$router.push({ path: 'note_view', query: { tbl_id: tbl_id, note_id: note_id } });
+        viewNote(note_id) {
+            this.$router.push({ path: 'note_view', query: { note_id: note_id } });
         }
     },
     beforeMount() {

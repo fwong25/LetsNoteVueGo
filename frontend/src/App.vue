@@ -21,4 +21,7 @@ export default {
       padding:0;
       cursor: pointer;
   }
+  .header-font {
+    color: rgb(78, 121, 174);
+  }
 </style>

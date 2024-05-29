@@ -8,7 +8,7 @@
                         <div class="col-md-10 offset-md-1">
                             <div class="card">
                                 <div class="card-header shadow-sm bg-white">
-                                    <h1 class="display-5 text-info"><font-awesome-icon icon="check-double" /> LetsNote</h1>
+                                    <h1 class="display-5 header-font"><font-awesome-icon icon="check-double" /> LetsNote</h1>
                                 </div>
                                 <div class="card-body">
                                     <slot />

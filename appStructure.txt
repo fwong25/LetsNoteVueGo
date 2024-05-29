@@ -11,6 +11,9 @@
 |   |  |  |  |  |-- NoteList.vue
 |   |  |  |  |  |-- NoteModify.vue
 |   |  |  |  |  |-- NoteView.vue
+|   |  |  |  |  |-- NoteSidebar.vue
+|   |  |  |  |  |-- NoteEditTemplate.vue
+|   |  |  |  |  |-- SubpageTemplate.vue
 |   |  |  |  |  |
 +---● src (backend go source codes)
 |   |  |  |

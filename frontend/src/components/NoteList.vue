@@ -4,15 +4,15 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-header shadow-sm bg-white">
-                        <h1 class="display-5 text-info"><font-awesome-icon icon="check-double" /> LetsNote</h1>
+                        <h1 class="display-5 header-font"><font-awesome-icon icon="check-double" /> LetsNote</h1>
                     </div>
                     <div class="card-body">
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <form class="float-left d-inline">
-                                    <div class="input-group-append text-info" style="column-width: 60px;">
+                                    <div class="input-group-append header-font" style="column-width: 60px;">
                                         <span class="input-group-text bg-white py-0">
-                                            <button type="submit" class="btn btn-sm text-info" @click.stop.prevent="addNewNote()">
+                                            <button type="submit" class="btn btn-sm header-font" @click.stop.prevent="addNewNote()">
                                                 <font-awesome-icon icon="plus-circle" size="lg"/>
                                             </button>
                                         </span>

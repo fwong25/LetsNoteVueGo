@@ -15,21 +15,22 @@
 |   |  |  |  |  |-- NoteEditTemplate.vue
 |   |  |  |  |  |-- SubpageTemplate.vue
 |   |  |  |  |  |
-+---● src (backend go source codes)
++---● backend (backend go source codes)
+|   |  |--● src
 |   |  |  |
-|   |  |--● db_mgmt (database functions)
-|   |  |  |--db_mgmt.go
-|   |  |  |--go.mod
-|   |  |  |
-|   |  |--● models (define note structure and operations)
-|   |  |  |--models.go
-|   |  |  |--go.mod
-|   |  |  |
-|   |  |--● interfaces (handle http requests)
-|   |  |  |--interfaces.go
-|   |  |  |--go.mod
-|   |  |  |
-|-- main.go (main program)
+|   |  |  |--● db_mgmt (database functions)
+|   |  |  |  |--db_mgmt.go
+|   |  |  |  |--go.mod
+|   |  |  |  |
+|   |  |  |--● models (define note structure and operations)
+|   |  |  |  |--models.go
+|   |  |  |  |--go.mod
+|   |  |  |  |
+|   |  |  |--● interfaces (handle http requests)
+|   |  |  |  |--interfaces.go
+|   |  |  |  |--go.mod
+|   |  |  |  |
+|   |  |-- main.go (main program)
+|   |  |-- go.mod
+|   |  |-- go.sum
 |-- README.md
-|-- go.mod
-|-- go.sum

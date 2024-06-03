@@ -3,7 +3,7 @@
         <small class="text-muted">Created on {{ selected_note.Created_date }}, </small>
         <small class="text-muted">last modified on {{ selected_note.Last_modified_date}}</small>
         <br>
-        <h5 class="mb-1 d-inline"  id="title_p">title_to_replace</h5>
+        <h5 class="mb-1 d-inline"  id="title_p"></h5>
         <form class="float-right d-inline" style="float: right;">
             <button type="submit" class="btn" title="Delete note" @click.stop.prevent="deleteNote()">
                 <i class="text-danger float-right">
@@ -25,7 +25,7 @@
                 </i>
             </button>
         </form>
-        <p class="mb-1" style="white-space: pre-line" id="content_p">content_to_replace</p>
+        <p class="mb-1" style="white-space: pre-line" id="content_p"></p>
     </subpage-template>
 </template>
 
@@ -70,8 +70,8 @@ export default {
 
                         const title_p = document.getElementById("title_p");
                         const content_p = document.getElementById("content_p");
-                        title_p.innerHTML = title_p.innerHTML.replace(/title_to_replace/g, this.selected_note.Title);
-                        content_p.innerHTML = content_p.innerHTML.replace(/content_to_replace/g,  this.selected_note.Content);
+                        title_p.innerHTML = this.selected_note.Title;
+                        content_p.innerHTML = this.selected_note.Content;
                     })
                 })
             },

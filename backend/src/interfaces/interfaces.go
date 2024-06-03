@@ -8,25 +8,6 @@ import (
 	"strconv"
 )
 
-const templatesDirPath = "templates"
-
-var funcMap = map[string]interface{}{
-	"Iterate": func(count int) []uint {
-		var i uint
-		var Items []uint
-		for i = 0; i < uint(count); i++ {
-			Items = append(Items, i)
-		}
-		return Items
-	},
-	"IsSubnote": func(note_level int) bool {
-		if note_level == 0 {
-			return false
-		}
-		return true
-	},
-}
-
 func Handler(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
 	case ("/list_note"):
